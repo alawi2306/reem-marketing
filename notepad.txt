@@ -1,0 +1,149 @@
+const clientSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "You missed the name"]
+  },
+  companyname: String,
+  niche: String,
+  age: {
+    type: Number,
+    min: 10,
+    max:105,
+  },
+  email: String
+});
+
+const Client = mongoose.model("Client", clientSchema);
+
+const client = new Client({
+  name: "john",
+  companyname: "john enterprise",
+  niche: "real estate",
+  age: 55,
+  email: "string"
+});
+
+const client2 = new Client({
+  name: "will",
+  companyname: "john enterprise",
+  niche: "real estate",
+  age: 55,
+  email: "string"
+});
+
+Client.create([client, client2], function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("Successful");
+  }
+});
+Client.find({}, function(err, clients) {
+  if (err) {
+    console.log(err);
+  } else {
+    clients.forEach(client => {
+      console.log(client.name);
+    });
+  }
+});
+
+
+
+
+client.connect(function(err){
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+
+  const db = client.db(dbName);
+
+  findDocuments(db, function(){
+    client.close();
+  });
+});
+
+const insertDocuments = function(db, callback) {
+  const collection = db.collection('fruits');
+
+  collection.insertMany([
+    {
+      name: "Apple",
+      score: 8,
+      review: "Great Fruit"
+    },
+    {
+      name: "Orange",
+      score: 6,
+      review: "Sweet & Sour"
+    },
+    {
+      name: "Banana",
+      score: 9,
+      review: "Great Stuff"
+    }
+  ],function (err, result)
+  {
+      assert.equal(err, null);
+      assert.equal(3, result.insertedCount);
+      assert.equal(3, Object.keys(result.insertedIds).length);
+      console.log("Inserted 3 documents into the collection");
+      callback(result);
+  });
+};
+
+
+const findDocuments = function(db, callback){
+  
+  const collection = db.collection('fruits');
+
+  collection.find({}).toArray(function(err, fruits) {
+    assert.equal(err, null);
+    console.log("Found the following records");
+    console.log("fruits");
+    console.log(fruits);
+  });
+}
+
+
+app.post("/", function(req, res) {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const emailAddress = req.body.emailAddress;
+
+  console.log(`firstName: ${firstName}, lastName: ${lastName}, emailAddress: ${emailAddress}`);
+
+  const data = {
+    members: [
+      {
+        email_address: emailAddress,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: firstName,
+          LNAME: lastName
+        }
+      }
+    ]
+  };
+
+  const JSONdata = JSON.stringify(data);
+
+  const url = "https://us21.api.mailchimp.com/3.0/lists/7bebf7d572";
+
+  const options = {
+    method: "POST",
+    auth: "alawi2306:e97d6e0731468d7918c5f1bceab7ab95-us21"
+  };
+
+  const request = https.request(url, options, function(response) {
+    if (response.statusCode === 200) {
+      console.log("Successfully subscribed to mailing list");
+      res.sendFile(__dirname+ "/success.html")
+        } else {
+      console.log("Error subscribing to mailing list");
+      res.sendFile(__dirname+ "/faliure.html")
+    }
+  });
+
+  request.write(JSONdata);
+  request.end();
+});
