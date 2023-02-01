@@ -24,8 +24,14 @@ app.set('view engine' , 'ejs');
 //   res.status(404).send('Page not found');
 // });
 
-app.listen(3000, function() {
-  console.log("Server listening on port 3000");
+let port= process.env.PORT;
+
+if (port=== null || port === "") {
+  port=3000;
+}
+
+app.listen(port, function(){
+  console.log("server started");
 });
 
 app.use(express.static("public"));
@@ -41,9 +47,7 @@ app.get("/", function(req, res) {
   
 });
 
-// if (require.main === module) {
-//   app.listen(process.env.PORT || 3000);
-// }
+
 
 
 
