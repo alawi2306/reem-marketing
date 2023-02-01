@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const url = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/clientsDB';
+const url = 'mongodb+srv://alis2906:Alawi2306@cluster0.r8ptdii.mongodb.net/clientsDB?retryWrites=true';
 const mongoose = require("mongoose");
 
 mongoose.connect(url, { useNewUrlParser: true }, (err) => {
@@ -17,17 +17,15 @@ mongoose.connect(url, { useNewUrlParser: true }, (err) => {
 
 
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('view engine' , 'ejs');
 
-const port = process.env.PORT || 3000;
 
-app.use((req, res) => {
-  res.status(404).send('Page not found');
-});
+// app.use((req, res) => {
+//   res.status(404).send('Page not found');
+// });
 
-app.listen(port, function() {
-  console.log(`Server listening on port ${port}`);
+app.listen(3000, function() {
+  console.log("Server listening on port 3000");
 });
 
 app.use(express.static("public"));
@@ -43,9 +41,9 @@ app.get("/", function(req, res) {
   
 });
 
-if (require.main === module) {
-  app.listen(process.env.PORT || 3000);
-}
+// if (require.main === module) {
+//   app.listen(process.env.PORT || 3000);
+// }
 
 
 
