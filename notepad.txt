@@ -1,152 +1,114 @@
-process.env.MONGODB_URI ||
 
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const url = 'mongodb+srv://alis2906:Alawi2306@cluster0.r8ptdii.mongodb.net/clientsDB?retryWrites=true';
+const mongoose = require("mongoose");
 
-const clientSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "You missed the name"]
-  },
-  companyname: String,
-  niche: String,
-  age: {
-    type: Number,
-    min: 10,
-    max:105,
-  },
-  email: String
-});
-
-const Client = mongoose.model("Client", clientSchema);
-
-const client = new Client({
-  name: "john",
-  companyname: "john enterprise",
-  niche: "real estate",
-  age: 55,
-  email: "string"
-});
-
-const client2 = new Client({
-  name: "will",
-  companyname: "john enterprise",
-  niche: "real estate",
-  age: 55,
-  email: "string"
-});
-
-Client.create([client, client2], function(err) {
+mongoose.connect(url, { useNewUrlParser: true }, (err) => {
   if (err) {
-    console.log(err);
-  } else {
-    console.log("Successful");
+    console.log(`Mongoose connection error: ${err}`);
+    process.exit(1);
   }
-});
-Client.find({}, function(err, clients) {
-  if (err) {
-    console.log(err);
-  } else {
-    clients.forEach(client => {
-      console.log(client.name);
-    });
+  else {
+    console.log("successfully connected to MongoDB")
   }
 });
 
 
 
-
-client.connect(function(err){
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-
-  findDocuments(db, function(){
-    client.close();
-  });
-});
-
-const insertDocuments = function(db, callback) {
-  const collection = db.collection('fruits');
-
-  collection.insertMany([
-    {
-      name: "Apple",
-      score: 8,
-      review: "Great Fruit"
-    },
-    {
-      name: "Orange",
-      score: 6,
-      review: "Sweet & Sour"
-    },
-    {
-      name: "Banana",
-      score: 9,
-      review: "Great Stuff"
-    }
-  ],function (err, result)
-  {
-      assert.equal(err, null);
-      assert.equal(3, result.insertedCount);
-      assert.equal(3, Object.keys(result.insertedIds).length);
-      console.log("Inserted 3 documents into the collection");
-      callback(result);
-  });
-};
+app.set('view engine' , 'ejs');
 
 
-const findDocuments = function(db, callback){
-  
-  const collection = db.collection('fruits');
+// app.use((req, res) => {
+//   res.status(404).send('Page not found');
+// });
 
-  collection.find({}).toArray(function(err, fruits) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.log("fruits");
-    console.log(fruits);
-  });
+let port= process.env.PORT;
+
+if (port=== null || port === "") {
+  port=3000;
 }
 
-
-app.post("/", function(req, res) {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const emailAddress = req.body.emailAddress;
-
-  console.log(`firstName: ${firstName}, lastName: ${lastName}, emailAddress: ${emailAddress}`);
-
-  const data = {
-    members: [
-      {
-        email_address: emailAddress,
-        status: "subscribed",
-        merge_fields: {
-          FNAME: firstName,
-          LNAME: lastName
-        }
-      }
-    ]
-  };
-
-  const JSONdata = JSON.stringify(data);
-
-  const url = "https://us21.api.mailchimp.com/3.0/lists/7bebf7d572";
-
-  const options = {
-    method: "POST",
-    auth: "alawi2306:e97d6e0731468d7918c5f1bceab7ab95-us21"
-  };
-
-  const request = https.request(url, options, function(response) {
-    if (response.statusCode === 200) {
-      console.log("Successfully subscribed to mailing list");
-      res.sendFile(__dirname+ "/success.html")
-        } else {
-      console.log("Error subscribing to mailing list");
-      res.sendFile(__dirname+ "/faliure.html")
-    }
-  });
-
-  request.write(JSONdata);
-  request.end();
+app.listen(port, function(){
+  console.log("server started");
 });
+
+app.use(express.static("public"));
+app.use('/images', express.static('images'))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+
+app.get("/", function(req, res) {
+  res.render('homepage.ejs', )
+  console.log(`Request status code: ${res.statusCode}`);
+  
+});
+
+
+
+
+
+app.get("/sales-page", function(req,res){
+    res.render("salespage.ejs")
+});
+
+app.get("/contact-us", function(req,res){
+  res.render("contact-us.ejs")
+});
+
+app.get("/questionnaire", function(req,res){
+  res.render("questionnaire.ejs")
+  
+});
+
+const FormSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  age: { 
+    type: Number, 
+    min: 18, 
+    max: 100, 
+    required: true 
+  },
+  gender: { type: String, required: true },
+  location: { type: String, required: true },
+  marketingExp: { type: String, required: true},
+  marketingGoals: { type: String, required: true,
+  },
+  budget: {
+    type: Number,
+    min: 0,
+    required: true
+  },
+  desiredTimeFrame: { type: String, required: true,},
+  howDidYouHear: { type: String, required: true,}
+});
+
+
+const Form = mongoose.model("Form", FormSchema);
+
+let newForm;
+
+app.post("/thank-you", async (req, res) => {  
+  const formData = req.body;  
+  console.log(req.body);  
+  newForm = new Form({...formData});  
+
+  try {
+      await newForm.save();
+      return res.redirect("/thank-you");  
+  } catch (ex) {
+      console.log("Error", ex);
+  }
+});
+
+
+
+app.get("/thank-you", function(req,res){
+  res.render("thank-you.ejs")
+});
+
+mongoose.set("strictQuery", false);

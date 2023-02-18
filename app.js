@@ -24,13 +24,9 @@ app.set('view engine' , 'ejs');
 //   res.status(404).send('Page not found');
 // });
 
-let port= process.env.PORT;
 
-if (port=== null || port === "") {
-  port=3000;
-}
 
-app.listen(port, function(){
+app.listen(3000 || process.env.PORT, function(){
   console.log("server started");
 });
 
@@ -110,5 +106,17 @@ app.post("/thank-you", async (req, res) => {
 app.get("/thank-you", function(req,res){
   res.render("thank-you.ejs")
 });
+
+app.get("/privacypolicy", function(req,res){
+  res.render("privacypolicy.ejs");
+})
+
+app.get("/termsofservice", function(req,res){
+  res.render("termsofservice.ejs")
+})
+
+app.get("/salespage", function(req,res) {
+  res.render()
+})
 
 mongoose.set("strictQuery", false);

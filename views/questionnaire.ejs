@@ -1,1 +1,47 @@
-<!DOCTYPE html><html lang="en"><head> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Document</title> <link rel="stylesheet" href="styles-questionaire.css"> <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet"> <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&display=swap" rel="stylesheet"> <title>ReemMarketing</title></head><body> <div style=" font-family: 'Montserrat', sans-serif !important; ; font-weight: 10 !important; color: rgb(53, 53, 53); " class="title"> <h3 class="app-title">Applying with us.</h3> </div><div class="top-container"> <img src="/images/undraw_resume_re_hkth.svg" alt="marketing" class="apply-image" style="top: 40px; margin-top: 24px;"> <div class="text-1"> <p class="app-p">If you are interested to join us, please fill out the form below. quickly and easily, without the need to send any additional documents or wait for a response. We will then return to you as fast as possible via email. After that, we can get into contact. </p></div></div class="form-container"> <div style="page-break-before: always;" class="form"> <div style="top: 50px; "> <h2 class="form-title" style="text-align: center ; margin-bottom: 20px;">Fill in this form to sign up</h2> </div><form class="border" method="POST" action="/thank-you"> <div> <label for="name">1. What is your name?</label> <input type="text" id="name" name="name" required> </div><div> <label for="email">2. What is your email address?</label> <br><input type="email" id="email" name="email" required> </div><br><div> <label for="age">3. How old are you?</label> <br><input type="number" id="age" name="age" min="18" max="100" required> </div <br><div class="gender-div" > <label for="gender">4. What is your gender?</label> <br><div> <select class="big-select" id="gender" name="gender" required> <option value=""></option> <option value="male">Male</option> <option value="female">Female</option> <option value="other">Other</option> </select> </div></div><br><div> <label for="location">5. Where do you currently reside?</label> <input type="text" id="location" name="location" required> </div><div> <label for="marketingExp">6. How much experience do you have with social media marketing?</label> <input id="marketingExp" name="marketingExp" type="text" required> </div><div> <label for="marketingGoals">7. What are your marketing goals?</label> <input id="marketingGoals" name="marketingGoals" type="text" required> </div><br><div> <label for="budget">8. What is your budget for social media marketing?</label> <input type="number" id="budget" name="budget" min="0" required> </div><br><div> <label for="desiredTimeFrame">9. What is your desired time frame for achieving your marketing goals?</label> <input type="text" id="desiredTimeFrame" name="desiredTimeFrame" required> </div><div> <label for="howDidYouHear">10. How did you hear about our social media marketing agency?</label> <input type="text" id="howDidYouHear" name="howDidYouHear" required> </div><input class="submit" style=" margin: 0 auto;" type="submit" value="Submit"> </form> </div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <link rel="stylesheet" href="styles-questionaire.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <title>ReemMarketing</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon2.png">
+
+</head>
+
+<body>
+    <div style=" font-family: 'Montserrat', sans-serif !important; ; font-weight: 10 !important; color: rgb(53, 53, 53); " class="title">
+        <h3 class="app-title">Applying with us.</h3>
+    </div>
+    <div class="top-container"> <img src="/images/undraw_resume_re_hkth.svg" alt="marketing" class="apply-image" style="top: 40px; margin-top: 24px;">
+        <div class="text-1">
+            <p class="app-p">If you are interested to join us, please fill out the form below. quickly and easily, without the need to send any additional documents or wait for a response. We will then return to you as fast as possible via email. After that, we can get
+                into contact. </p>
+        </div>
+    </div class="form-container">
+    <div style="page-break-before: always;" class="form">
+        <div style="top: 50px; ">
+            <h2 class="form-title" style="text-align: center ; margin-bottom: 20px;">Fill in this form to sign up</h2>
+        </div>
+        <form class="border" method="POST" action="/thank-you">
+            <div> <label for="name">1. What is your company name?</label> <input type="text" id="name" name="name" required> </div>
+            <div> <label for="email">2. What is your company's email address?</label> <br><input type="email" id="email" name="email" required> </div><br>
+            <div> <label for="age">3. What is your company phone number?</label> <br><input type="number" id="age" name="age" min="18" max="100" required> </div <br>
+            <div class="gender-div"> <label for="gender">4. What is your gender?</label> <br>
+                <div> <select class="big-select" id="gender" name="gender" required> <option value=""></option> <option value="male">Male</option> <option value="female">Female</option> <option value="other">Other</option> </select> </div>
+            </div><br>
+            <div> <label for="location">5. Where is your company based in?</label> <input type="text" id="location" name="location" required> </div>
+            <div> <label for="marketingExp">6. Have you worked with any social media marketing agencies previously?</label> <input id="marketingExp" name="marketingExp" type="text" required> </div>
+            <div> <label for="marketingGoals">7. What are your marketing goals and what is your desired time frame for achieving them?</label> <input id="marketingGoals" name="marketingGoals" type="text" required> </div><br>
+            <div> <label for="budget">8. What is your budget for social media marketing?</label> <input type="number" id="budget" name="budget" min="0" required> </div><br>
+            <div> <label for="desiredTimeFrame">9. Briefly describe your business model and how you want your marketing to work.</label> <input type="text" id="desiredTimeFrame" name="desiredTimeFrame" required> </div>
+            <div> <label for="howDidYouHear">10. How did you hear about our social media marketing agency?</label> <input type="text" id="howDidYouHear" name="howDidYouHear" required> </div><input class="submit" style=" margin: 0 auto;" type="submit" value="Submit">            </form>
+    </div>
+</body>
+
+</html>
